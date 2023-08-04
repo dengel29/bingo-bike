@@ -3,10 +3,7 @@ export const onRequestPost = async (context) => {
   // get the email from the request
   const toEmail = (await context.request.formData()).get("email")
   console.log(toEmail)
-  const REDIRECT_LOGIN_RESPONSE = 101
-  if (!toEmail) {
-    return REDIRECT_LOGIN_RESPONSE;
-  }
+
 
   // generate the unique token for URL
   const token = crypto.randomUUID();

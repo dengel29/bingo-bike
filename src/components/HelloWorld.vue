@@ -1,7 +1,4 @@
 <script setup>
-import {useRouter} from 'vue-router'
-
-const router = useRouter()
 defineProps({
   msg: {
     type: String,
@@ -31,7 +28,7 @@ const email = ""
     <h1 class="green">{{ msg || 'Hi' }}</h1>
     <h3>
       Enter your email for a magic link
-      <form method="post" action="/handle-login">
+      <form method="post" action="/auth/sent">
         <input :model="email" type="email" name="email" id="email-input">
         
         <input type="submit">
