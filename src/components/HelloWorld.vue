@@ -1,10 +1,8 @@
 <script setup>
-// import { ref, watch } from 'vue'
-
 defineProps({
   msg: {
     type: String,
-    required: true
+    required: false,
   }
 })
 const email = ""
@@ -25,16 +23,18 @@ const getFormDataFromEvent = (event) => {
 
 <template>
   <div class="greetings">
-    <h1 class="green">{{ msg }}</h1>
+    <h1 class="green">{{ msg || 'Hi' }}</h1>
     <h3>
       Enter your email for a magic link
-      <form @submit.prevent="handleSendMagicLink" method="post" >
+      <form @submit.prevent="handleSendMagicLink" method="post" action="/auth/login" >
         <input :model="email" type="email" name="email" id="email-input">
         
         <input type="submit">
       </form>
     </h3>
   </div>
+  
+  <router-link to="auth/sent"> Auth sent test</router-link>
 </template>
 
 <style scoped>
