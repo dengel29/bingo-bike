@@ -9,7 +9,7 @@
     "test:unit": "vitest",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
     "format": "prettier --write src/",
-    "pages:dev": "wrangler pages dev --compatibility-date=2023-08-01 --proxy 5173 -- npm run dev",
+    "pages:dev": "wrangler pages dev --compatibility-date=2023-07-24 --proxy 5555 npm run dev",
     "pages:deploy": "npm run build && wrangler pages deploy ./dist"
   },
   "dependencies": {

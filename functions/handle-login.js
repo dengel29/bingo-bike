@@ -1,10 +1,8 @@
-import postmark from "postmark"
-
-
 export const onRequestPost = async (context) => {
-  const client = new postmark.ServerClient(context.env.POSTMARK_KEY)
+  console.log(context.env)
   // get the email from the request
   const toEmail = (await context.request.formData()).get("email")
+  console.log(toEmail)
   const REDIRECT_LOGIN_RESPONSE = 101
   if (!toEmail) {
     return REDIRECT_LOGIN_RESPONSE;
@@ -14,16 +12,23 @@ export const onRequestPost = async (context) => {
   const token = crypto.randomUUID();
 
   // set token and email pairing
-  await context.env.KV.put(token, toEmail, {expirationTtl: 60 * 5})
+  await context.env.BINGO_LOCAL.put(token, toEmail, {expirationTtl: 60 * 5})
 
   const url = `${
     new URL(context.request.url).href
   }?token=${encodeURIComponent(token)}`
 
-  // send the email
-  const response = await client.sendEmailWithTemplate({
+  // send email with http
+  const response = await fetch("https://api.postmarkapp.com/email", {
+    method: "post",
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+      "X-Postmark-Server-Token": `${context.env.POSTMARK_KEY}`
+    },
+    body: JSON.stringify({
     "From": "dan@dngl.cc",
-    "To": `${"test@blackhole.postmarkapp.com" || toEmail}`,
+    "To": `${toEmail}`,
     "Subject": "Your Log In For Bingo Bike",
     "HtmlBody": "<strong>Hello</strong> dear Postmark user, this is bingobike.",
     "TextBody": "Hello from Postmark via bingboike!",
@@ -32,8 +37,8 @@ export const onRequestPost = async (context) => {
     "TemplateModel": {
       "url": url,
       "email": toEmail
-    }
-  });
+    },})
+  })
 
   console.log(response)
   // respond by redirecting to page to tell them to check email

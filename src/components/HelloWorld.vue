@@ -1,4 +1,7 @@
 <script setup>
+import {useRouter} from 'vue-router'
+
+const router = useRouter()
 defineProps({
   msg: {
     type: String,
@@ -9,16 +12,18 @@ const email = ""
 
 
 
-const handleSendMagicLink = (event) => {
-  const formData = getFormDataFromEvent(event)
-  console.log(formData)
-  return "not too bed"
-}
+// const handleSendMagicLink = (event) => {
+//   const formData = getFormDataFromEvent(event)
+  
+//   console.log(formData)
+//   return "not too bed"
+// }
 
-const getFormDataFromEvent = (event) => {
-  const formData = new FormData(event.target)
-  return Object.fromEntries(formData);
-}
+// const getFormDataFromEvent = (event) => {
+//   const formData = new FormData(event.target)
+//   return Object.fromEntries(formData);
+// }
+
 </script>
 
 <template>
@@ -26,7 +31,7 @@ const getFormDataFromEvent = (event) => {
     <h1 class="green">{{ msg || 'Hi' }}</h1>
     <h3>
       Enter your email for a magic link
-      <form @submit.prevent="handleSendMagicLink" method="post" action="/auth/login" >
+      <form method="post" action="/handle-login">
         <input :model="email" type="email" name="email" id="email-input">
         
         <input type="submit">
