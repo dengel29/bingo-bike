@@ -9,7 +9,7 @@ export const onRequestPost = async (context) => {
   const token = crypto.randomUUID();
 
   // set token and email pairing
-  await context.env.BINGO_LOCAL.put(token, toEmail, {expirationTtl: 60 * 5})
+  await context.env.BINGO_BIKE.put(token, toEmail, {expirationTtl: 60 * 5})
 
   const url = `${
     new URL(context.request.url).href
